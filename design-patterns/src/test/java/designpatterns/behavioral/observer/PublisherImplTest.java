@@ -1,4 +1,4 @@
-package designpatterns.observer;
+package designpatterns.behavioral.observer;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -6,6 +6,11 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import designpatterns.behavioral.observer.Event;
+import designpatterns.behavioral.observer.Publisher;
+import designpatterns.behavioral.observer.PublisherImpl;
+import designpatterns.behavioral.observer.Subscriber;
 
 public class PublisherImplTest {
 	private Publisher testObj;

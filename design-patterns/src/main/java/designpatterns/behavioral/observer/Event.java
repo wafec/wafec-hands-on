@@ -1,10 +1,10 @@
-package designpatterns.observer;
+package designpatterns.behavioral.observer;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 @EqualsAndHashCode
 public class Event {
