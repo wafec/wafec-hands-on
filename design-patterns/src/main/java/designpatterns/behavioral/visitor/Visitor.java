@@ -10,6 +10,9 @@ package designpatterns.behavioral.visitor;
 		2. Single Responsibility: it allows to have multiple classes very well scoped
 		3. Traverse complex structure: the visitor might traverse a complex structure and obtaining
 									   information from all objects to compose a new thing
+	Cons:
+		1. Visitor might need access to private fields
+		2. All visitors will need update when a new class is added to the hierarchy
  */
 public interface Visitor {
 	void doForA( VisitedA visited );
