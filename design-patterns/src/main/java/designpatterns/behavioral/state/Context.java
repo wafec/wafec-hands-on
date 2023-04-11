@@ -1,6 +1,6 @@
 package designpatterns.behavioral.state;
 
-public class Context {
+class Context {
 	private State currentState;
 
 	public Context() {

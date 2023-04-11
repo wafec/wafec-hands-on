@@ -2,7 +2,7 @@ package designpatterns.behavioral.chainofresponsibility;
 
 import java.util.Optional;
 
-public class HandlerImpl implements Handler {
+class HandlerImpl implements Handler {
 	private final Handler nextHandler;
 	private final RequestProcessor requestProcessor;
 

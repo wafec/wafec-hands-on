@@ -3,7 +3,7 @@ package designpatterns.behavioral.mediator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MediatorImpl implements Mediator {
+class MediatorImpl implements Mediator {
 	private final ComponentA componentA;
 	private final ComponentB componentB;
 

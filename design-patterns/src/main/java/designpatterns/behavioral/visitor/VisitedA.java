@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class VisitedA {
+class VisitedA {
 	private String data;
 
 	public void accept( final Visitor visitor ) {

@@ -3,7 +3,7 @@ package designpatterns.behavioral.observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PublisherImpl implements Publisher {
+class PublisherImpl implements Publisher {
 
 	private final List<Subscriber> subscribers;
 
