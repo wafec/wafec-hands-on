@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @EqualsAndHashCode
-public class Snapshot implements Memento {
+class Snapshot implements Memento {
 	private String data;
 	private String name;
 	private Date createdDate;

@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @EqualsAndHashCode
-public class DataObject implements UnderCopy {
+class DataObject implements UnderCopy {
 	private String data;
 	private Clock clock;
 	private String name;

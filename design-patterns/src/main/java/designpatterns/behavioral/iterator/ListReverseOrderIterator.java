@@ -2,7 +2,7 @@ package designpatterns.behavioral.iterator;
 
 import java.util.List;
 
-public class ListReverseOrderIterator<T> implements Iterator<T> {
+class ListReverseOrderIterator<T> implements Iterator<T> {
 	private final List<T> list;
 	private int index;
 

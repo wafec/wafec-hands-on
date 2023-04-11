@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Caretaker {
+class Caretaker {
 	private final List<Memento> snapshotList;
 
 	public Caretaker() {

@@ -1,6 +1,6 @@
 package designpatterns.behavioral.state;
 
-public class StateA implements State {
+class StateA implements State {
 	private final Context context;
 
 	public StateA( final Context context ) {

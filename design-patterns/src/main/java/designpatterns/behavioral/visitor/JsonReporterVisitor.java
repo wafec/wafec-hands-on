@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class JsonReporterVisitor implements Visitor {
+class JsonReporterVisitor implements Visitor {
 	private final Map<String, String> fieldsByKey;
 
 	public JsonReporterVisitor() {
