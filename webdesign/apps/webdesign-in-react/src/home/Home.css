@@ -1,0 +1,14 @@
+
+.Home-flex {
+    display: flex;
+}
+
+.Home-flexitem-1 {
+    flex: 1;
+}
+
+.Home-container {
+    width: 1200px;
+    margin: 0 auto;
+}
+

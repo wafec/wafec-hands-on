@@ -1,0 +1,19 @@
+
+.Home-button {
+    border-radius: 2em;
+    background-color: white;
+    padding: 20px;
+    display: inline-block;
+}
+
+.Home-button-opacity {
+    opacity: 50%;
+}
+
+.Home-button-opacity:hover {
+    opacity: 100%;
+}
+
+.Home-button-ml {
+    margin-left: 10px;
+}

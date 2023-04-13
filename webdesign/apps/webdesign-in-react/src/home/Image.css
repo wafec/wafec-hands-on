@@ -1,0 +1,9 @@
+
+
+.Home-image {
+    background-image: url("./headset.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 400px;
+    height: 400px;
+}
