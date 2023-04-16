@@ -5,10 +5,6 @@ import (
 )
 
 func main() {
-	var message string
+	var message string = "test"
 	fmt.Println(message)
-}
-
-func Test() {
-
 }
