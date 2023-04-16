@@ -1,27 +1,43 @@
 package binarytree
 
-import "testing"
+import (
+	"collections/common"
+	"testing"
 
-func TestXxx(t *testing.T) {
-	var root Node[int64] = &NodeImpl[int64]{10, nil, nil, nil}
-	var valueNode Node[int64] = &NodeImpl[int64]{11, nil, nil, nil}
+	"github.com/stretchr/testify/assert"
+)
 
-	result := Insert(root, valueNode, CompareInt64To)
+func TestInsert_ParentIsNull(t *testing.T) {
+	assert := assert.New(t)
+	var input Node[int64] = &NodeImpl[int64]{Value: 10}
 
-	if result.GetParentNode() == nil {
-		t.Error("Parent should not be nil")
-	}
-	if root.GetRightNode() == nil {
-		t.Error("Root right node should not be nil")
-	}
-	valueNode = &NodeImpl[int64]{12, nil, nil, nil}
+	Insert(nil, input, common.Int64CompareTo)
 
-	result = Insert(root, valueNode, CompareInt64To)
-	if result.GetParentNode().GetValue() != 11 {
-		t.Error("Nil not valid")
-	}
+	assert.Nil(input.GetLeftNode())
+	assert.Nil(input.GetRightNode())
+	assert.Nil(input.GetParentNode())
 }
 
-func CompareInt64To(a, b int64) int64 {
-	return a - b
+func TestInsert_ValueIsGreaterThanRootValue(t *testing.T) {
+	assert := assert.New(t)
+	var input Node[int64] = &NodeImpl[int64]{Value: 10}
+	var rootNode Node[int64] = &NodeImpl[int64]{Value: 9}
+
+	Insert(rootNode, input, common.Int64CompareTo)
+
+	assert.Equal(rootNode.GetRightNode().GetValue(), input.GetValue(), "Root right node value should be equal to input value")
+	assert.Equal(input.GetParentNode().GetValue(), rootNode.GetValue(), "Input parent node value should be equal to root value")
+	assert.Nil(rootNode.GetLeftNode())
+}
+
+func TestInsert_ValueIsLesserThanRootValue(t *testing.T) {
+	assert := assert.New(t)
+	var input Node[int64] = &NodeImpl[int64]{Value: 10}
+	var rootNode Node[int64] = &NodeImpl[int64]{Value: 11}
+
+	Insert(rootNode, input, common.Int64CompareTo)
+
+	assert.Equal(rootNode.GetLeftNode().GetValue(), input.GetValue(), "Root left node value should be equal to input value")
+	assert.Equal(input.GetParentNode().GetValue(), rootNode.GetValue(), "Input parent node value should be equal to root value")
+	assert.Nil(rootNode.GetRightNode())
 }
