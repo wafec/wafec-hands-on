@@ -15,11 +15,11 @@ type Meta[T comparable] interface {
 }
 
 type MetaMap[T comparable] struct {
-	Map map[*tree.Node[T]]Color
+	ColorByNode map[*tree.Node[T]]Color
 }
 
 func (self *MetaMap[T]) GetColor(node *tree.Node[T]) Color {
-	color, ok := self.Map[node]
+	color, ok := self.ColorByNode[node]
 	if ok {
 		return color
 	} else {
@@ -29,9 +29,9 @@ func (self *MetaMap[T]) GetColor(node *tree.Node[T]) Color {
 }
 
 func (self *MetaMap[T]) SetColor(node *tree.Node[T], color Color) {
-	self.Map[node] = color
+	self.ColorByNode[node] = color
 }
 
 func NewMeta[T comparable]() Meta[T] {
-	return &MetaMap[T]{Map: make(map[*tree.Node[T]]Color)}
+	return &MetaMap[T]{ColorByNode: make(map[*tree.Node[T]]Color)}
 }
