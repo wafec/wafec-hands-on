@@ -28,6 +28,14 @@ func (self *Node[T]) GetUncleOrNil() *Node[T] {
 	}
 }
 
+func (self *Node[T]) GetGrandFatherOrNil() *Node[T] {
+	if self.Parent != nil && self.Parent.Parent != nil {
+		return self.Parent.Parent
+	} else {
+		return nil
+	}
+}
+
 type Tree[T comparable] struct {
 	Root *Node[T]
 }

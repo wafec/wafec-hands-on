@@ -72,3 +72,36 @@ func TestGetUncleOrNil_UncleReturned(t *testing.T) {
 
 	assert.Equal(nodeObj.Parent.Parent.Next, uncleReturned)
 }
+
+func TestGetGrandFatherOrNil_NoParent(t *testing.T) {
+	assert := assert.New(t)
+	nodeObj := NewNode(10, nil)
+
+	result := nodeObj.GetGrandFatherOrNil()
+
+	assert.Nil(result)
+}
+
+func TestGetGrandFatherOrNil_NoGrandFather(t *testing.T) {
+	assert := assert.New(t)
+	parentObj := NewNode(11, nil)
+	nodeObj := NewNode(10, parentObj)
+	parentObj.Prev = nodeObj
+
+	result := nodeObj.GetGrandFatherOrNil()
+
+	assert.Nil(result)
+}
+
+func TestGetGrandFatherOrNil_GrandFatherReturned(t *testing.T) {
+	assert := assert.New(t)
+	grandFather := NewNode(12, nil)
+	parent := NewNode(11, grandFather)
+	grandFather.Prev = parent
+	child := NewNode(10, parent)
+	parent.Prev = child
+
+	result := child.GetGrandFatherOrNil()
+
+	assert.Equal(grandFather, result)
+}
