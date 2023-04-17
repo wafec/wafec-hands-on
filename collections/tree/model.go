@@ -36,6 +36,20 @@ func (self *Node[T]) GetGrandFatherOrNil() *Node[T] {
 	}
 }
 
+func (self *Node[T]) IsRoot() bool {
+	return self.Parent == nil
+}
+
 type Tree[T comparable] struct {
 	Root *Node[T]
+}
+
+func (self *Tree[T]) UpdateRoot() {
+	var currentNode *Node[T] = self.Root
+	var prevNode *Node[T] = nil
+	for currentNode != nil {
+		prevNode = currentNode
+		currentNode = currentNode.Parent
+	}
+	self.Root = prevNode
 }

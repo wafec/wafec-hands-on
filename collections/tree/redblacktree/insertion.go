@@ -10,30 +10,35 @@ import (
 func Insert[T comparable](treeObj *tree.Tree[T], value T, compareFunc common.CompareFunc[T], metaObj Meta[T]) *tree.Node[T] {
 	nodeInserted := binarytree.Insert(treeObj, value, compareFunc)
 	metaObj.SetColor(nodeInserted, Red)
-	if nodeInserted == treeObj.Root {
-		metaObj.SetColor(nodeInserted, Black)
-	} else {
-		checkUncleColor(nodeInserted, metaObj)
-	}
+	checkRootColor(nodeInserted, metaObj)
+	treeObj.UpdateRoot()
 	return nodeInserted
 }
 
-func checkUncleColor[T comparable](nodeInserted *tree.Node[T], metaObj Meta[T]) {
-	uncleObj := nodeInserted.GetUncleOrNil()
-	if uncleObj == nil {
-		return
-	}
-	if metaObj.GetColor(uncleObj) == Red {
-		metaObj.SetColor(uncleObj, Black)
-		metaObj.SetColor(nodeInserted.Parent, Black)
-		metaObj.SetColor(uncleObj.Parent, Red)
-		checkUncleColor(uncleObj.Parent, metaObj)
+func checkRootColor[T comparable](currentNode *tree.Node[T], metaObj Meta[T]) {
+	if currentNode.IsRoot() {
+		metaObj.SetColor(currentNode, Black)
 	} else {
-		doRotation(nodeInserted, metaObj)
+		checkUncleColor(currentNode, metaObj)
+	}
+}
+
+func checkUncleColor[T comparable](currentNode *tree.Node[T], metaObj Meta[T]) {
+	uncleObj := currentNode.GetUncleOrNil()
+	if uncleObj != nil && metaObj.GetColor(uncleObj) == Red {
+		metaObj.SetColor(uncleObj, Black)
+		metaObj.SetColor(currentNode.Parent, Black)
+		metaObj.SetColor(uncleObj.Parent, Red)
+		checkRootColor(uncleObj.Parent, metaObj)
+	} else {
+		doRotation(currentNode, metaObj)
 	}
 }
 
 func doRotation[T comparable](nodeInserted *tree.Node[T], metaObj Meta[T]) {
+	if nodeInserted.GetGrandFatherOrNil() == nil {
+		return
+	}
 	if isLeftLeftCase(nodeInserted) {
 		doLeftLeftCase(nodeInserted, metaObj)
 	} else if isLeftRightCase(nodeInserted) {
@@ -45,52 +50,52 @@ func doRotation[T comparable](nodeInserted *tree.Node[T], metaObj Meta[T]) {
 	}
 }
 
-func doLeftLeftCase[T comparable](nodeInserted *tree.Node[T], metaObj Meta[T]) {
-	metaObj.SetColor(nodeInserted.GetGrandFatherOrNil(), Red)
-	metaObj.SetColor(nodeInserted.Parent, Black)
-	rotation.RotateToRight(nodeInserted.Parent)
+func doLeftLeftCase[T comparable](currentNode *tree.Node[T], metaObj Meta[T]) {
+	metaObj.SetColor(currentNode.GetGrandFatherOrNil(), Red)
+	metaObj.SetColor(currentNode.Parent, Black)
+	rotation.RotateToRight(currentNode.Parent)
 }
 
-func doLeftRightCase[T comparable](nodeInserted *tree.Node[T], metaObj Meta[T]) {
-	metaObj.SetColor(nodeInserted, Black)
-	metaObj.SetColor(nodeInserted.GetGrandFatherOrNil(), Red)
-	rotation.RotateToLeft(nodeInserted)
-	rotation.RotateToRight(nodeInserted.Parent)
+func doLeftRightCase[T comparable](currentNode *tree.Node[T], metaObj Meta[T]) {
+	metaObj.SetColor(currentNode, Black)
+	metaObj.SetColor(currentNode.GetGrandFatherOrNil(), Red)
+	rotation.RotateToLeft(currentNode)
+	rotation.RotateToRight(currentNode)
 }
 
-func doRightRightCase[T comparable](nodeInserted *tree.Node[T], metaObj Meta[T]) {
-	metaObj.SetColor(nodeInserted.Parent, Black)
-	metaObj.SetColor(nodeInserted.GetGrandFatherOrNil(), Red)
-	rotation.RotateToLeft(nodeInserted.Parent)
+func doRightRightCase[T comparable](currentNode *tree.Node[T], metaObj Meta[T]) {
+	metaObj.SetColor(currentNode.Parent, Black)
+	metaObj.SetColor(currentNode.GetGrandFatherOrNil(), Red)
+	rotation.RotateToLeft(currentNode.Parent)
 }
 
-func doRightLeftCase[T comparable](nodeInserted *tree.Node[T], metaObj Meta[T]) {
-	metaObj.SetColor(nodeInserted, Black)
-	metaObj.SetColor(nodeInserted.GetGrandFatherOrNil(), Red)
-	rotation.RotateToRight(nodeInserted)
-	rotation.RotateToLeft(nodeInserted.Parent)
+func doRightLeftCase[T comparable](currentNode *tree.Node[T], metaObj Meta[T]) {
+	metaObj.SetColor(currentNode, Black)
+	metaObj.SetColor(currentNode.GetGrandFatherOrNil(), Red)
+	rotation.RotateToRight(currentNode)
+	rotation.RotateToLeft(currentNode)
 }
 
-func isLeftLeftCase[T comparable](nodeInserted *tree.Node[T]) bool {
-	parent := nodeInserted.Parent
+func isLeftLeftCase[T comparable](currentNode *tree.Node[T]) bool {
+	parent := currentNode.Parent
 	grandFather := parent.Parent
-	return grandFather.Prev == parent && parent.Prev == nodeInserted
+	return grandFather.Prev == parent && parent.Prev == currentNode
 }
 
-func isLeftRightCase[T comparable](nodeInserted *tree.Node[T]) bool {
-	parent := nodeInserted.Parent
+func isLeftRightCase[T comparable](currentNode *tree.Node[T]) bool {
+	parent := currentNode.Parent
 	grandFather := parent.Parent
-	return grandFather.Prev == parent && parent.Next == nodeInserted
+	return grandFather.Prev == parent && parent.Next == currentNode
 }
 
-func isRightRightCase[T comparable](nodeInserted *tree.Node[T]) bool {
-	parent := nodeInserted.Parent
+func isRightRightCase[T comparable](currentNode *tree.Node[T]) bool {
+	parent := currentNode.Parent
 	grandFather := parent.Parent
-	return grandFather.Next == parent && parent.Next == nodeInserted
+	return grandFather.Next == parent && parent.Next == currentNode
 }
 
-func isRightLeftCase[T comparable](nodeInserted *tree.Node[T]) bool {
-	parent := nodeInserted.Parent
+func isRightLeftCase[T comparable](currentNode *tree.Node[T]) bool {
+	parent := currentNode.Parent
 	grandFather := parent.Parent
-	return grandFather.Next == parent && parent.Prev == nodeInserted
+	return grandFather.Next == parent && parent.Prev == currentNode
 }

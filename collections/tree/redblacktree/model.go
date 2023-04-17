@@ -19,6 +19,9 @@ type MetaMap[T comparable] struct {
 }
 
 func (self *MetaMap[T]) GetColor(node *tree.Node[T]) Color {
+	if node == nil {
+		return Black
+	}
 	color, ok := self.ColorByNode[node]
 	if ok {
 		return color
