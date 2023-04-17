@@ -19,6 +19,9 @@ func Insert[T comparable](treeObj *tree.Tree[T], value T, compareFunc common.Com
 
 func checkUncleColor[T comparable](nodeInserted *tree.Node[T], metaObj Meta[T]) {
 	uncleObj := nodeInserted.GetUncleOrNil()
+	if uncleObj == nil {
+		return
+	}
 	if metaObj.GetColor(uncleObj) == Red {
 		metaObj.SetColor(uncleObj, Black)
 		metaObj.SetColor(nodeInserted.Parent, Black)
